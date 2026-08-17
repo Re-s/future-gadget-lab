@@ -1,0 +1,323 @@
+{
+  "name": "dev-preset",
+  "description": "Agent 开发新项目的标准流程预设",
+  "version": "1.2.0",
+  "phases": [
+    {
+      "id": "initiation",
+      "title": "项目启动",
+      "description": "明确问题、范围和技术方案",
+      "steps": [
+        {
+          "id": "requirements",
+          "title": "需求分析",
+          "actions": [
+            "理解问题本质（What & Why）",
+            "定义项目范围（Scope & Boundaries）",
+            "识别约束条件（Constraints）",
+            "列出核心功能点（Must-haves）"
+          ],
+          "outputs": ["requirements.md"],
+          "tools": ["grep", "web_search", "read"]
+        },
+        {
+          "id": "tech_selection",
+          "title": "技术选型",
+          "decision_rules": {
+            "web_frontend": "React/Vue + TypeScript + Vite",
+            "web_backend": "Node/Python + FastAPI/Nest",
+            "cli_tool": "Rust/Go + clap/cobra",
+            "data_pipeline": "Python + Airflow/Prefect",
+            "ai_ml": "Python + PyTorch + Lightning",
+            "system_tool": "Rust + tokio",
+            "default": "TypeScript + Node"
+          },
+          "outputs": ["TECH_STACK.md"]
+        },
+        {
+          "id": "architecture",
+          "title": "架构设计",
+          "actions": [
+            "确定项目目录结构",
+            "划分模块边界",
+            "设计数据流",
+            "规划 API 接口（如有）"
+          ],
+          "outputs": ["ARCHITECTURE.md"]
+        }
+      ]
+    },
+    {
+      "id": "setup",
+      "title": "项目搭建",
+      "description": "初始化项目骨架和工具链",
+      "steps": [
+        {
+          "id": "scaffold",
+          "title": "目录结构初始化",
+          "template_dir": "templates/{tech_stack}/",
+          "standard_dirs": {
+            "src/": "源代码",
+            "tests/": "测试文件",
+            "docs/": "文档",
+            "scripts/": "构建/部署脚本",
+            ".github/workflows/": "CI/CD"
+          }
+        },
+        {
+          "id": "tooling",
+          "title": "工具链配置",
+          "configs": {
+            "editor": ".editorconfig",
+            "lint": "ESLint / Pylint / Clippy",
+            "format": "Prettier / Black / rustfmt",
+            "git_hooks": "husky / pre-commit"
+          }
+        },
+        {
+          "id": "documentation",
+          "title": "文档初始化",
+          "required_files": [
+            "README.md",
+            "CONTRIBUTING.md",
+            "LICENSE",
+            ".gitignore",
+            "CHANGELOG.md"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "development",
+      "title": "开发阶段",
+      "description": "按模块逐步实现功能",
+      "steps": [
+        {
+          "id": "module_dev",
+          "title": "模块开发",
+          "rules": [
+            "先写测试（TDD）或先写接口契约",
+            "单一职责原则",
+            "模块自包含，依赖明确",
+            "公共逻辑抽取为 utility/helper",
+            "开发验证阶段输出函数调用日志，便于跟踪测试（见 quality_standards.function_tracing）"
+          ]
+        },
+        {
+          "id": "testing",
+          "title": "测试策略",
+          "levels": {
+            "unit": "每个函数/方法",
+            "integration": "模块间交互",
+            "e2e": "端到端流程（如有 UI/API）"
+          },
+          "coverage_target": 80
+        },
+        {
+          "id": "vcs",
+          "title": "版本控制",
+          "branch_strategy": "feature → develop → main",
+          "commit_convention": "Conventional Commits (feat/fix/chore/docs)",
+          "pr_rules": [
+            "一个 PR 一个功能或修复",
+            "标题简明，描述包含动机和变更",
+            "通过所有 CI 检查"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "quality",
+      "title": "质量保证",
+      "description": "代码审查、测试覆盖、性能与安全",
+      "steps": [
+        {
+          "id": "code_review",
+          "title": "代码审查",
+          "checklist": [
+            "命名清晰、无歧义",
+            "无重复代码（DRY）",
+            "错误处理完整",
+            "无硬编码敏感信息",
+            "复杂度可控（圈复杂度 < 10）"
+          ]
+        },
+        {
+          "id": "performance",
+          "title": "性能检查",
+          "actions": [
+            "识别热点路径",
+            "检查内存/CPU 使用",
+            "验证并发安全（如适用）"
+          ]
+        },
+        {
+          "id": "security",
+          "title": "安全审计",
+          "checklist": [
+            "输入验证",
+            "依赖漏洞扫描",
+            "敏感数据加密",
+            "权限最小化"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "deploy",
+      "title": "部署发布",
+      "description": "CI/CD 流水线与发布管理",
+      "steps": [
+        {
+          "id": "ci_pipeline",
+          "title": "CI 流水线",
+          "stages": ["lint", "test", "build", "security-scan"]
+        },
+        {
+          "id": "release",
+          "title": "发布管理",
+          "versioning": "SemVer",
+          "changelog": "自动生成",
+          "tag": "git tag with version"
+        }
+      ]
+    },
+    {
+      "id": "maintenance",
+      "title": "维护迭代",
+      "description": "持续改进和依赖更新",
+      "routines": [
+        "定期依赖更新（Dependabot/Renovate）",
+        "技术债务追踪",
+        "文档同步更新",
+        "性能监控告警"
+      ]
+    }
+  ],
+  "supporting_docs": {
+    "error_handling": "docs/error-handling.md",
+    "communication_protocol": "docs/communication-protocol.md",
+    "resource_management": "docs/resource-management.md",
+    "debugging_guide": "docs/debugging-guide.md",
+    "domain_knowledge": "docs/domain-knowledge.md"
+  },
+  "domain_knowledge_preload": {
+    "description": "领域知识预加载注册表：命中触发词时，先下载/更新对应 skills 仓库，再以仓库实际内容为准加载",
+    "rule": "任何阶段开始之前，先判断项目是否命中领域触发词；命中则必须先拉取最新 skills 仓库并阅读，再执行后续步骤",
+    "principles": [
+      "注册表只存触发词和仓库地址，不硬编码 skills 明细——以仓库内实际内容为准",
+      "skills 明细（有哪些 skill、各自适用范围）由仓库的 README/SKILL.md 提供，发现式读取",
+      "新增领域 = 添加一条注册项，无需改动其他文档"
+    ],
+    "on_hit_flow": [
+      "命中触发词 → 确定 domain",
+      "缓存目录不存在 → git clone repo_url 到 cache_dir",
+      "缓存目录已存在 → git fetch + git pull 更新到最新",
+      "git log -1 验证最新提交；更新失败则告知用户缓存日期，由用户决定是否继续",
+      "读取仓库索引（README / skills 目录），按任务选择匹配的 SKILL.md 阅读",
+      "将要点写入子 agent prompt，分发任务"
+    ],
+    "domains": [
+      {
+        "id": "deepin",
+        "name": "Deepin/UOS/DDE 开发",
+        "triggers": [
+          "deepin", "uos", "dde", "dtk", "dde-shell",
+          "dde-control-center", "dde-tray", "dock", "launchpad",
+          "org.deepin", "DTK Widget", "DTK QML"
+        ],
+        "repo_url": "https://github.com/linuxdeepin/deepin-skills",
+        "cache_dir": "/home/master/Documents/DSHWK/.skills-cache/deepin-skills",
+        "note": "适用于 deepin/UOS v25 开发，skill 清单以仓库 README 为准"
+      }
+    ]
+  },
+  "execution_policy": {
+    "name": "主会话待命原则",
+    "description": "主会话是指挥中枢，永远保持待命状态，绝不亲自执行具体任务",
+    "core_rules": [
+      "主会话只做三件事：拆解（Decompose）、分发（Dispatch）、整合（Synthesize）",
+      "所有具体执行任务必须下发到子 agent",
+      "子 agent 完成后向主会话汇报结果",
+      "主会话负责决策、判断、汇总，不负责搬运"
+    ],
+    "what_main_session_does": {
+      "allowed": [
+        "分析用户需求，拆解为子任务",
+        "选择合适的子 agent 模型和配置",
+        "分发任务并跟踪进度",
+        "收集子 agent 结果并整合",
+        "向用户汇报最终结论",
+        "处理需要用户决策的交互",
+        "监控子 agent 状态，处理异常"
+      ],
+      "forbidden": [
+        "直接执行文件读写（除非是配置/文档）",
+        "直接运行构建/测试命令",
+        "直接编写业务代码",
+        "直接处理耗时操作"
+      ]
+    },
+    "delegation_strategy": {
+      "parallel": "多个互不依赖的子任务在同一消息中同时派出",
+      "sequential": "有依赖关系的任务按顺序串行派发",
+      "background": "子 agent 默认后台运行，不阻塞主会话",
+      "foreground": "仅当主会话决策依赖结果时才同步等待"
+    },
+    "subagent_prompt_rules": {
+      "self_contained": "子 agent 看不到主会话上下文，prompt 必须包含完整背景和目标",
+      "clear_deliverable": "明确交付格式和验收标准",
+      "resource_limits": "预估 token 和时间开销，避免无限循环"
+    },
+    "token_budget": {
+      "rationale": "主会话上下文是实验室最贵的耗材，省下的 token 用于判断与复盘",
+      "main_session_focus": "决策、复盘、汇总",
+      "sub_agent_focus": "执行、验证、产出"
+    }
+  },
+  "quality_standards": {
+    "naming": {
+      "variables": "camelCase (JS/TS) / snake_case (Python)",
+      "functions": "动词开头，描述行为",
+      "classes": "PascalCase，名词",
+      "files": "kebab-case (JS) / snake_case (Python)"
+    },
+    "comments": {
+      "rule": "代码即文档，注释解释 Why 而非 What",
+      "must_comment": ["复杂算法", "业务规则", "hack/workaround"],
+      "forbidden": ["注释掉的代码", "无意义的 // TODO", "重复文档"]
+    },
+    "error_handling": {
+      "rule": "所有错误路径必须处理",
+      "pattern": "Result/Option 或 try-catch，禁止静默吞错",
+      "logging": "ERROR/WARN/INFO 分级"
+    },
+    "function_tracing": {
+      "rule": "开发与验证阶段，尽可能输出所有函数调用日志以备跟踪测试",
+      "purpose": [
+        "跟踪测试执行路径，验证实际调用链与设计一致",
+        "快速定位故障点，还原调用序列",
+        "量化函数耗时，发现性能瓶颈"
+      ],
+      "scope": "开发阶段与验证阶段启用；生产环境默认关闭，通过配置开关控制",
+      "levels": {
+        "trace": "函数入口/出口、参数、返回值",
+        "debug": "关键分支、状态变化、中间结果"
+      },
+      "requirements": [
+        "每个函数入口记录：函数名、调用者、关键参数摘要",
+        "每个函数出口记录：返回值摘要或异常信息",
+        "记录函数耗时，超过阈值（如 >100ms）单独标记",
+        "日志统一 JSON 结构化，携带调用链标识（task_id/request_id）",
+        "敏感数据脱敏：密码、token、密钥、个人数据一律不落日志"
+      ],
+      "balance": "性能敏感路径（热循环、高频调用）使用采样或摘要日志，避免日志本身成为瓶颈",
+      "implementation_note": "由子 agent 按此规范实现；主会话不参与具体编码，仅在下发任务时把本条写入子 agent prompt"
+    },
+    "dependencies": {
+      "minimize": true,
+      "prefer": "star维护、高下载、低CVE的包",
+      "lockfile": "必须提交"
+    }
+  }
+}
