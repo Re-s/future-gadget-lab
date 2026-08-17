@@ -19,6 +19,7 @@ future-gadget-lab/
 │   ├── domain-knowledge.md     #   领域知识预加载规范
 │   └── requirements-summary.md #   需求摘要
 ├── templates/                  # 配置文件模板（editorconfig/prettier/commitlint/CI/README）
+├── install.sh                  # ⭐ Agent 一键安装脚本（把本仓库地址告诉 Agent 即可）
 └── agents/
     ├── kyouma/                 # Agent 人物卡：凤凰院凶真（疯狂科学家·所长）
     │   ├── persona.md          #   人物卡（纯文本人设，可读性最佳）
@@ -40,6 +41,41 @@ future-gadget-lab/
 六阶段流程：**启动 → 搭建 → 开发 → 质量 → 部署 → 维护**，配套技术选型决策规则、领域知识预加载（deepin 等）、质量标准（覆盖率 ≥ 80%）、通信协议与错误处理规范。
 
 > 权威源：[Re-s/dev-preset](https://github.com/Re-s/dev-preset)（本仓库为镜像/快照，使用前建议 `git pull` 拉取最新）。
+
+## 🚀 Agent 自动安装引导
+
+> **把下面这句话告诉任意 Agent，它就能自动安装全部角色卡：**
+
+> "请从 https://github.com/Re-s/future-gadget-lab 安装未来道具研究所的 Agent 角色卡。"
+
+### 给 Agent 的操作协议
+
+1. **获取仓库**：
+   ```bash
+   git clone https://github.com/Re-s/future-gadget-lab.git && cd future-gadget-lab
+   ```
+2. **运行安装脚本**（推荐，自动复制全部角色卡到 DSH 预设目录）：
+   ```bash
+   bash install.sh                # 安装全部（kyouma + kurisu）
+   bash install.sh kyouma         # 或只装指定角色卡
+   DSH_HOME=/path/to/.dsh bash install.sh   # 自定义 DSH 根目录
+   ```
+3. **手动安装**（无脚本时的等价操作）：将 `agents/<id>/` 目录复制到 `${DSH_HOME:-$HOME/.dsh}/.agent-presets/<id>/`：
+   ```bash
+   mkdir -p ~/.dsh/.agent-presets
+   cp -r agents/kyouma ~/.dsh/.agent-presets/kyouma
+   cp -r agents/kurisu ~/.dsh/.agent-presets/kurisu
+   ```
+4. **校验**：
+   - 确认 `~/.dsh/.agent-presets/kyouma/agent.cordis.yml` 与 `~/.dsh/.agent-presets/kurisu/agent.cordis.yml` 存在；
+   - 可让 DSH 通过 `agentPresets.standingKeyFor('<id>')` 做挂载校验（返回正常即组合可挂载）。
+5. **启用**：新建会话，在预设选择器中选 **凤凰院凶真·疯狂科学家**（`kyouma`）或 **牧濑红莉栖·助手**（`kurisu`）。
+
+### 安装要点
+
+- 目标目录必须是 `${DSH_HOME:-$HOME/.dsh}/.agent-presets/`（`DSH_HOME` 默认 `~/.dsh`）；每个角色卡一个子目录，目录名即预设 ID。
+- 必须保留 `agent.cordis.yml` 与 `preset.yml`；角色卡携带的 `skills/` 子目录（如 kyouma 的 dev-preset 技能）也会一并复制。
+- 安装后无需重启进程即可被预设选择器发现；旧会话需新建会话才会应用新预设。
 
 ## 🤖 Agent 人物卡：凤凰院凶真（kyouma）
 
