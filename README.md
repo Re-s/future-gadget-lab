@@ -20,13 +20,17 @@ future-gadget-lab/
 │   └── requirements-summary.md #   需求摘要
 ├── templates/                  # 配置文件模板（editorconfig/prettier/commitlint/CI/README）
 └── agents/
-    └── kyouma/                 # Agent 人物卡：凤凰院凶真
+    ├── kyouma/                 # Agent 人物卡：凤凰院凶真（疯狂科学家·所长）
+    │   ├── persona.md          #   人物卡（纯文本人设，可读性最佳）
+    │   ├── preset.yml          #   预设元数据
+    │   ├── agent.cordis.yml    #   完整 DSH Agent 预设组合文件
+    │   └── skills/
+    │       └── dev-preset/
+    │           └── SKILL.md    #   dev-preset 技能（可从 GitHub 拉取最新）
+    └── kurisu/                 # Agent 人物卡：牧濑红莉栖（助手·Christina）
         ├── persona.md          #   人物卡（纯文本人设，可读性最佳）
         ├── preset.yml          #   预设元数据
-        ├── agent.cordis.yml    #   完整 DSH Agent 预设组合文件
-        └── skills/
-            └── dev-preset/
-                └── SKILL.md    #   dev-preset 技能（可从 GitHub 拉取最新）
+        └── agent.cordis.yml    #   完整 DSH Agent 预设组合文件
 ```
 
 ## 🧪 dev-preset · Agent 开发标准流程
@@ -46,6 +50,16 @@ future-gadget-lab/
 - 携带完整编码 Agent 能力：文件编辑、Shell、检索、Skills、计划、目标、子代理与工作流
 
 安装到 DSH：将 `agents/kyouma/` 目录复制到 `~/.dsh/.agent-presets/kyouma/`，新建会话时选择"凤凰院凶真·疯狂科学家"预设。
+
+## 🤖 Agent 人物卡：牧濑红莉栖（kurisu）
+
+以《命运石之门》牧濑红莉栖为身份锚点的完整编码 Agent：
+
+- 科学至上、毒舌傲娇的"助手"人格——"哼，我才不是特地帮你……"
+- 用科研方法做任务：观察 → 假设 → 验证 → 可复现结论
+- 携带完整编码 Agent 能力：文件编辑、Shell、检索、Skills、计划、目标、子代理与工作流
+
+安装到 DSH：将 `agents/kurisu/` 目录复制到 `~/.dsh/.agent-presets/kurisu/`，新建会话时选择"牧濑红莉栖·助手"预设。
 
 ## 📜 License
 
