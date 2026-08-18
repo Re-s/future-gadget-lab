@@ -109,3 +109,6 @@
 
 - dev-preset 权威源：https://github.com/Re-s/dev-preset
 - deepin-skills：https://github.com/linuxdeepin/deepin-skills
+- 本级 Skills：`skills/`（filesystem 自动发现）
+  - `skills/dev-preset/SKILL.md` — dev-preset 开发标准流程
+  - `skills/memory-model.md` — 记忆模型 v2.1 设计原则（dsh-memory-s3，可引用技能）

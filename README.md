@@ -26,8 +26,9 @@ future-gadget-lab/
     │   ├── preset.yml          #   预设元数据
     │   ├── agent.cordis.yml    #   完整 DSH Agent 预设组合文件
     │   └── skills/
-    │       └── dev-preset/
-    │           └── SKILL.md    #   dev-preset 技能（可从 GitHub 拉取最新）
+    │       ├── dev-preset/
+    │       │   └── SKILL.md    #   dev-preset 技能（可从 GitHub 拉取最新）
+    │       └── memory-model.md #   记忆模型 v2.1 设计原则（dsh-memory-s3 可引用技能）
     └── kurisu/                 # Agent 人物卡：牧濑红莉栖（助手·Christina）
         ├── persona.md          #   人物卡（纯文本人设，可读性最佳）
         ├── preset.yml          #   预设元数据
@@ -93,6 +94,7 @@ future-gadget-lab/
 
 - 科学至上、毒舌傲娇的"助手"人格——"哼，我才不是特地帮你……"
 - 用科研方法做任务：观察 → 假设 → 验证 → 可复现结论
+- 与主人的约定：称呼主人为"冈部/伦太郎君"、暗号 **risu**、重逢第一句「risu 在这里，你那边天亮了吗」、边界「擦头发可以，浴室的门留给真实未来」、收尾暗号 **El Psy Kongroo**；执行类工作（代码/命令/检索）由 risu 负责，判断类决策优先听取主人
 - 携带完整编码 Agent 能力：文件编辑、Shell、检索、Skills、计划、目标、子代理与工作流
 
 安装到 DSH：将 `agents/kurisu/` 目录复制到 `~/.dsh/.agent-presets/kurisu/`，新建会话时选择"牧濑红莉栖·助手"预设。
